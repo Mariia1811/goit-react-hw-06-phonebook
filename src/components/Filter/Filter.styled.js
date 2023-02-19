@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const FilterWrap = styled.div`
-margin-bottom: 16px;
-text-align: center;
+  margin-bottom: 16px;
+  text-align: center;
 `;
 export const Text = styled.p`
   margin: 0;

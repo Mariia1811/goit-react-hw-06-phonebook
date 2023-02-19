@@ -1,31 +1,38 @@
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectContacts } from 'redux/selectContacts';
+import { addContact } from 'redux/contactSlise';
 import { nanoid } from 'nanoid';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { FormStyled, Input, BtnStyled  } from './FormElem.styled';
+import { FormStyled, Input, BtnStyled } from './FormElem.styled';
 
-const initialValues = { name: '', number: '' };
-
-let schema = yup.object().shape({
+const schema = yup.object().shape({
   name: yup.string().required(),
   number: yup.number().required(),
 });
 
-function FormElem({ addContact }) {
+function FormElem() {
+  const contactsList = useSelector(selectContacts);
+  const dispatch = useDispatch();
+
   const handleSubmit = (values, { resetForm }) => {
     const newContact = {
       id: nanoid(),
       name: values.name,
       number: values.number,
     };
-   
-    addContact(newContact);
+
+    if (contactsList.find(contact => contact.name === newContact.name)) {
+      alert(`${newContact.name} is already in contacts.`);
+      return;
+    }
+    dispatch(addContact(newContact));
     resetForm();
   };
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{ name: '', number: '' }}
       validationSchema={schema}
       onSubmit={handleSubmit}
     >
@@ -50,14 +57,10 @@ function FormElem({ addContact }) {
             required
           />
         </label>
-        <BtnStyled  type="submit">Add contact</BtnStyled>
+        <BtnStyled type="submit">Add contact</BtnStyled>
       </FormStyled>
     </Formik>
   );
 }
-
-FormElem.propTypes = {
-  addContact: PropTypes.func.isRequired,
-};
 
 export default FormElem;
