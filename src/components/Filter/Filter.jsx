@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { changeFilter } from 'redux/contactSlise';
+import { changeFilter } from 'redux/contactSlice';
 import { selectFilterValue } from 'redux/selectContacts';
 import { FilterWrap, Input, Text } from './Filter.styled';
 
 function Filter() {
-  const filterValue = useSelector(selectFilterValue);
   const dispatch = useDispatch();
-
+  const filterValue = useSelector(selectFilterValue);
+  
   return (
     <FilterWrap>
       <Text>Find contacts by name</Text>

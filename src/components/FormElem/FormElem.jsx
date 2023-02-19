@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from 'redux/selectContacts';
-import { addContact } from 'redux/contactSlise';
+import { addContact } from 'redux/contactSlice';
 import { nanoid } from 'nanoid';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -22,7 +22,7 @@ function FormElem() {
       number: values.number,
     };
 
-    if (contactsList.find(contact => contact.name === newContact.name)) {
+    if (contactsList.some(contact => contact.name === newContact.name)) {
       alert(`${newContact.name} is already in contacts.`);
       return;
     }
